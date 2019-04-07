@@ -135,11 +135,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangl.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="WolfObject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Lab22b.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

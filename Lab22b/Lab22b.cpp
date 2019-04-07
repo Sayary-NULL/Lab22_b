@@ -43,7 +43,6 @@ int Counts = 0;
 int Radius = 80;//60
 int Time = 0;
 int MaxTime = 60; // минута
-Rectangl Basket;
 vector<Circl> Circls;
 Circl Red(Point(0, 0), 0, 0), Gren(Point(0, 0), 0, 0), Blue(Point(0, 0), 0, 0);
 
@@ -140,7 +139,6 @@ void InichialParams()
 	Blue = blue;
 
 	GameStatus = StartMenu;
-	Basket.SetObgect(Point(MatrixWidth / 2 - Radius, 20), Point(MatrixWidth / 2 + Radius, 20 + 30));
 	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
 	Wolf.SetImage(pImage);
 
@@ -230,7 +228,7 @@ void Button9StartMenu()
 	GameStatus = StartMenu; 
 	Counts = 0;
 	Time = 0;
-	Basket.SetObgect(Point(MatrixWidth / 2 - Radius, 20), Point(MatrixWidth / 2 + Radius, 20 + 30));
+	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20), Point(MatrixWidth / 2 + Radius, 20 + 30)));
 	Circls.erase(Circls.begin(), Circls.end());
 }
 
@@ -294,20 +292,14 @@ void MouseMove(int x, int y)
 	{
 		if (x < 3 * MatrixWidth / 4 - Radius - 5 && x > MatrixWidth / 4 + Radius + 5)
 		{
-			Basket.LeftPoint.x = x - Radius;
-			Basket.RightPoint.x = x + Radius;
 			Wolf.SetNewCoord(x, 0);
 		}
 		else if (x == 3 * MatrixWidth / 4 - Radius - 5)
 		{
-			Basket.LeftPoint.x = x - Radius - 5;
-			Basket.RightPoint.x = x + Radius - 5;
 			Wolf.SetNewCoord(x - 5, 0);
 		}
 		else if (x == MatrixWidth / 4 + Radius + 5)
 		{
-			Basket.LeftPoint.x = x - Radius + 5;
-			Basket.RightPoint.x = x + Radius + 5;
 			Wolf.SetNewCoord(x + 5, 0);
 		}
 	}
@@ -317,7 +309,6 @@ void RenderGame()
 {
 	glColor3f(0.0f, 0.0f, 0.0f);
 
-	//Basket.Draw(true);
 	Wolf.Darw();
 
 	for (int i = 0; i < Circls.size(); i++)
