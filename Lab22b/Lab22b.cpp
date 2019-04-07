@@ -53,12 +53,14 @@ bool isDebuge = false;
 
 //Mouse
 Point SaveMousePosition;
+bool MoveLeft = false;
 
 //Wolf
 WolfObject Wolf;
 
 //Image
 AUX_RGBImageRec *pImage = nullptr;
+AUX_RGBImageRec *pImageTransform = nullptr;
 
 //
 void RenderScene(void);
@@ -84,6 +86,7 @@ void InichialParams();
 void image_load()
 {
 	pImage = auxDIBImageLoad("wolv2.bmp");
+	pImageTransform = auxDIBImageLoad("wolv2(transform).bmp");
 }
 
 void DrawFigures()
@@ -141,6 +144,7 @@ void InichialParams()
 	GameStatus = StartMenu;
 	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
 	Wolf.SetImage(pImage);
+	Wolf.SetImageTransform(pImageTransform);
 
 	MainMenu.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
 	MainMenu.SetColorCircuit(0.0f, 1.0f, 0.0f);
@@ -288,8 +292,19 @@ void PosiveMotionMauseMove(int x, int y)
 
 void MouseMove(int x, int y)
 {
+	y = MatrixHeght - y;
 	if (GameStatus == Game)
 	{
+		if (abs(SaveMousePosition.x - x) >= 10)
+		{
+			if (SaveMousePosition.x - x > 0)
+				MoveLeft = true;
+			else MoveLeft = false;
+
+			SaveMousePosition.x = x;
+			SaveMousePosition.y = y;
+		}
+
 		if (x < 3 * MatrixWidth / 4 - Radius - 5 && x > MatrixWidth / 4 + Radius + 5)
 		{
 			Wolf.SetNewCoord(x, 0);
@@ -309,7 +324,7 @@ void RenderGame()
 {
 	glColor3f(0.0f, 0.0f, 0.0f);
 
-	Wolf.Darw();
+	Wolf.Darw(MoveLeft);
 
 	for (int i = 0; i < Circls.size(); i++)
 		Circls[i].Draw(isDebuge, SelectGameMode == Hard);

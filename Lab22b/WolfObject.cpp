@@ -18,6 +18,11 @@ void WolfObject::SetImage(AUX_RGBImageRec* p)
 	OImage = p;
 }
 
+void WolfObject::SetImageTransform(AUX_RGBImageRec* p)
+{
+	OImageTransform = p;
+}
+
 void WolfObject::SetNewCoord(int x, int y)
 {
 	BackRect.LeftPoint.x = x - RadiusW ;
@@ -34,17 +39,27 @@ Point WolfObject::GetRightPoint()
 	return BackRect.RightPoint;
 }
 
-void WolfObject::Darw()
+void WolfObject::Darw(bool param)
 {
 	if (OImage != nullptr)
 	{
 		glRasterPos3d(BackRect.LeftPoint.x, BackRect.LeftPoint.y - OImage->sizeY + 3*RadiusH, 1); // Нижний левый угол изображения
 		glPixelZoom(1, 1); // Коэффициенты масштабирования по ширине и высоте
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Способ хранения изображения в памяти
-		glDrawPixels(OImage->sizeX, OImage->sizeY, // Ширина и высота в пикселах
-			GL_RGB, // Формат цвета пикселов
-			GL_UNSIGNED_BYTE, // Формат цветовых компонент
-			OImage->data); // Данные изображения
+		if (param)
+		{
+			glDrawPixels(OImage->sizeX, OImage->sizeY, // Ширина и высота в пикселах
+				GL_RGB, // Формат цвета пикселов
+				GL_UNSIGNED_BYTE, // Формат цветовых компонент
+				OImage->data); // Данные изображения
+		}
+		else
+		{
+			glDrawPixels(OImageTransform->sizeX, OImageTransform->sizeY, // Ширина и высота в пикселах
+				GL_RGB, // Формат цвета пикселов
+				GL_UNSIGNED_BYTE, // Формат цветовых компонент
+				OImageTransform->data); // Данные изображения
+		}
 	}
 
 	//BackRect.Draw();
