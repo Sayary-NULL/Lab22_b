@@ -4,6 +4,7 @@
 #include <ctime>
 #include <string>
 #include <cmath>
+#include "EagsObject.h"
 #include "WolfObject.h"
 #include "Menu.h"
 #include "Rectangl.h"
@@ -43,7 +44,7 @@ int Counts = 0;
 int Radius = 80;//60
 int Time = 0;
 int MaxTime = 60; // минута
-vector<Circl> Circls;
+//vector<Circl> Circls;
 Circl Red(Point(0, 0), 0, 0), Gren(Point(0, 0), 0, 0), Blue(Point(0, 0), 0, 0);
 
 //Menu
@@ -59,8 +60,11 @@ bool MoveLeft = false;
 WolfObject Wolf;
 
 //Image
-AUX_RGBImageRec *pImage = nullptr;
-AUX_RGBImageRec *pImageTransform = nullptr;
+AUX_RGBImageRec* pImage = nullptr;
+AUX_RGBImageRec* pImageTransform = nullptr;
+AUX_RGBImageRec* ReadEags = nullptr;
+AUX_RGBImageRec* BlueEags = nullptr;
+AUX_RGBImageRec* GrenEags = nullptr;
 
 //
 void RenderScene(void);
@@ -80,25 +84,32 @@ void TimerEnd(int);
 //button func
 void ButtonStartMenu();
 void ButtonDebage();
+void ButtonNewGame();
 
 //начальные установки меню 
 void InichialParams();
 
+//Eags
+vector<EagsObject> Eags;
+
 void image_load()
 {
 	pImage = auxDIBImageLoad("wolv2.bmp");
-	pImageTransform = auxDIBImageLoad("wolv2(transform).bmp");
+	pImageTransform = auxDIBImageLoad("wolv2(transform).bmp");//Read.bmp
+	ReadEags = auxDIBImageLoad("Read.bmp");
+	GrenEags = auxDIBImageLoad("Gren.bmp");
+	BlueEags = auxDIBImageLoad("Blue.bmp");
 }
 
 void DrawFigures()
 {
-	glRasterPos3d(400, 0, 1); // Нижний левый угол изображения ??????????????????????
-	glPixelZoom(1, 1); // Коэффициенты масштабирования по ширине и высоте
+	glRasterPos3d(400, 5, 1); // Нижний левый угол изображения ??????????????????????
+	glPixelZoom(0.3, 0.3); // Коэффициенты масштабирования по ширине и высоте
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Способ хранения изображения в памяти
-	glDrawPixels(pImage->sizeX, pImage->sizeY, // Ширина и высота в пикселах
+	glDrawPixels(ReadEags->sizeX, ReadEags->sizeY, // Ширина и высота в пикселах
 		GL_RGB, // Формат цвета пикселов
 		GL_UNSIGNED_BYTE, // Формат цветовых компонент
-		pImage->data); // Данные изображения
+		ReadEags->data); // Данные изображения
 }
 
 int main(int argc, char* argv[])
@@ -151,7 +162,7 @@ void AddMainMenu()
 	But2.SetBack(0, 1, 0);
 	But2.SetFront(1, 1, 1);
 
-	But4.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debage!!");
+	But4.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debuge!!");
 	But4.SetBack(1, 0, 0);
 	But4.SetFront(1, 1, 1);
 
@@ -182,7 +193,7 @@ void AddPauseMenu()
 	But2.SetBack(0, 1, 0);
 	But2.SetFront(1, 1, 1);
 
-	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debage!!");
+	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debuge!!");
 	But3.SetBack(1, 0, 0);
 	But3.SetFront(1, 1, 1);
 
@@ -230,7 +241,7 @@ void AddMenuEndGame()
 	MenuEndGame.SetColorFon(1.0f, 1.0f, 1.0f);
 	MenuEndGame.SetText("End Game", MatrixWidth / 2, MatrixHeght / 2 + 140);
 
-	Button But1, But2;
+	Button But1, But2, But3;
 
 	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, ButtonStartMenu, "Start menu");
 	But1.SetBack(0, 1, 0);
@@ -240,8 +251,13 @@ void AddMenuEndGame()
 	But2.SetBack(0, 1, 0);
 	But2.SetFront(1, 1, 1);
 
+	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, ButtonNewGame, "New Game");
+	But3.SetBack(0, 1, 0);
+	But3.SetFront(1, 1, 1);
+
 	MenuEndGame.AddButton(But1);
 	MenuEndGame.AddButton(But2);
+	MenuEndGame.AddButton(But3);
 }
 
 void InichialParams()
@@ -269,13 +285,22 @@ void ButtonStartMenu()
 	Counts = 0;
 	Time = 0;
 	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
-	Circls.erase(Circls.begin(), Circls.end());
+	Eags.erase(Eags.begin(), Eags.end());
 }
 
 void ButtonDebage()
 {
 	isDebuge = !isDebuge;
 	Wolf.SetDebage() = !Wolf.SetDebage();
+}
+
+void ButtonNewGame()
+{
+	GameStatus = Game;
+	Counts = 0;
+	Time = 0;
+	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
+	Eags.erase(Eags.begin(), Eags.end());
 }
 
 void TextXY(const char* text, int x, int y)
@@ -368,8 +393,8 @@ void RenderGame()
 
 	Wolf.Darw(MoveLeft);
 
-	for (int i = 0; i < Circls.size(); i++)
-		Circls[i].Draw(isDebuge, SelectGameMode == Hard);
+	for (int i = 0; i < Eags.size(); i++)
+		Eags[i].Draw(isDebuge);
 }
 
 void RenderScene()
@@ -393,7 +418,7 @@ void RenderScene()
 	TextXY(time.c_str(), rez.size() * 9 + 9, MatrixHeght - 11);
 
 	if(isDebuge)
-		TextXY("Debage!!", rez.size() * 9 + 9 + time.size() * 9 + 9, MatrixHeght - 11);
+		TextXY("Debuge!!", rez.size() * 9 + 9 + time.size() * 9 + 9, MatrixHeght - 11);
 
 	switch (SelectGameMode)
 	{
@@ -477,20 +502,20 @@ void TimerMoveCircl(int value)
 {
 	if (GameStatus == Game)
 	{
-		for (int i = 0; i < Circls.size();)
+		for (int i = 0; i < Eags.size();)
 		{
-			Circls[i].Centr.y -= 1;
+			Eags[i].MoveCircl(-1);
 
-			if (Circls[i].Centr.y - Circls[i].radius <= Wolf.GetRightPoint().y && Circls[i].Centr.x + Circls[i].radius >= Wolf.GetLeftPoint().x && Circls[i].Centr.x - Circls[i].radius <= Wolf.GetRightPoint().x)
+			if (Eags[i].GetLeftPoint().y <= Wolf.GetRightPoint().y && Eags[i].GetRightPoint().x >= Wolf.GetLeftPoint().x && Eags[i].GetLeftPoint().x <= Wolf.GetRightPoint().x)
 			{
-				Counts += Circls[i].Prise;
-				Circls.erase(Circls.begin() + i, Circls.begin() + i + 1);
+				Counts += Eags[i].Prise;
+				Eags.erase(Eags.begin() + i, Eags.begin() + i + 1);
 				continue;
 			}
 
-			if (Circls[i].Centr.y - Circls[i].radius <= 10)
+			if (Eags[i].GetLeftPoint().y <= 2)
 			{
-				Circls.erase(Circls.begin() + i, Circls.begin() + i + 1);
+				Eags.erase(Eags.begin() + i, Eags.begin() + i + 1);
 				continue;
 			}
 
@@ -513,10 +538,10 @@ void TimerCreateCircls(int value)
 		{
 			int x = rand() % (int)(MatrixWidth / 2 - 2 * radius) + MatrixWidth / 4 + radius,
 				y = MatrixHeght - 13 - radius;
-			Circls.push_back(Circl(Point(x, y), radius, rand() % 100));
+			Eags.push_back(EagsObject(Point(x,y), rand() % 101, ReadEags, GrenEags, BlueEags));
 		}
 
-		if (count != 1)
+		/*if (count != 1)
 		{
 			for (int counter = 0; counter < count; counter++)
 				for (int i = Circls.size() - count; i < Circls.size() - 1; i++)
@@ -574,7 +599,7 @@ void TimerCreateCircls(int value)
 						}
 					}
 				}
-		}
+		}*/
 	}
 
 	glutTimerFunc(value, TimerCreateCircls, value);

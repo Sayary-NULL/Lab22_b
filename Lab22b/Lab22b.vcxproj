@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="EagsObject.cpp" />
     <ClCompile Include="Lab22b.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="WolfObject.cpp" />
@@ -132,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Circl.h" />
+    <ClInclude Include="EagsObject.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangl.h" />
