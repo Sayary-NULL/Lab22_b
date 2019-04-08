@@ -11,6 +11,7 @@ class WolfObject
 	int RadiusW = 0, RadiusH = 0;
 	AUX_RGBImageRec* OImage = nullptr;
 	AUX_RGBImageRec* OImageTransform = nullptr;
+	bool isDebage = false;
 
 public:
 	WolfObject();
@@ -20,6 +21,7 @@ public:
 	void SetNewCoord(int x, int y);
 	Point GetLeftPoint();
 	Point GetRightPoint();
+	bool& SetDebage();
 	void Darw(bool param = false);
 	~WolfObject();
 };

@@ -39,6 +39,11 @@ Point WolfObject::GetRightPoint()
 	return BackRect.RightPoint;
 }
 
+bool& WolfObject::SetDebage()
+{
+	return isDebage;
+}
+
 void WolfObject::Darw(bool param)
 {
 	if (OImage != nullptr)
@@ -62,7 +67,8 @@ void WolfObject::Darw(bool param)
 		}
 	}
 
-	//BackRect.Draw();
+	if(isDebage)
+		BackRect.Draw();
 }
 
 

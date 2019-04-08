@@ -78,7 +78,8 @@ void TimerCreateCircls(int);
 void TimerEnd(int);
 
 //button func
-void Button9StartMenu();
+void ButtonStartMenu();
+void ButtonDebage();
 
 //начальные установки меню 
 void InichialParams();
@@ -134,6 +135,115 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+void AddMainMenu()
+{
+	MainMenu.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
+	MainMenu.SetColorCircuit(0.0f, 1.0f, 0.0f);
+	MainMenu.SetColorFon(1.0f, 1.0f, 1.0f);
+	MainMenu.SetText("Menu", MatrixWidth / 2, MatrixHeght / 2 + 140);
+	Button But1, But2, But3, But4;
+
+	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, []() { GameStatus = Game; }, "Start a game!");
+	But1.SetBack(0, 1, 0);
+	But1.SetFront(1, 1, 1);
+
+	But2.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { GameStatus = GameMode; }, "Game Mode");
+	But2.SetBack(0, 1, 0);
+	But2.SetFront(1, 1, 1);
+
+	But4.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debage!!");
+	But4.SetBack(1, 0, 0);
+	But4.SetFront(1, 1, 1);
+
+	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { exit(0); }, "Exit");
+	But3.SetBack(0, 1, 0);
+	But3.SetFront(1, 1, 1);
+
+	MainMenu.AddButton(But1);
+	MainMenu.AddButton(But2);
+	MainMenu.AddButton(But4);
+	MainMenu.AddButton(But3);
+}
+
+void AddPauseMenu()
+{
+	PauseMenu.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
+	PauseMenu.SetColorCircuit(0.0f, 1.0f, 0.0f);
+	PauseMenu.SetColorFon(1.0f, 1.0f, 1.0f);
+	PauseMenu.SetText("Pause", MatrixWidth / 2, MatrixHeght / 2 + 140);
+
+	Button But1, But2, But3, But4;
+	
+	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, ButtonStartMenu, "Start menu");
+	But1.SetBack(0, 1, 0);
+	But1.SetFront(1, 1, 1);
+
+	But2.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { GameStatus = Game; }, "Continue");
+	But2.SetBack(0, 1, 0);
+	But2.SetFront(1, 1, 1);
+
+	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, ButtonDebage, "Debage!!");
+	But3.SetBack(1, 0, 0);
+	But3.SetFront(1, 1, 1);
+
+	But4.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { exit(0); }, "Exit");
+	But4.SetBack(0, 1, 0);
+	But4.SetFront(1, 1, 1);
+
+	PauseMenu.AddButton(But1);
+	PauseMenu.AddButton(But2);
+	PauseMenu.AddButton(But3);
+	PauseMenu.AddButton(But4);
+}
+
+void AddMenuGameMode()
+{
+	MenuGameMode.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
+	MenuGameMode.SetColorCircuit(0.0f, 1.0f, 0.0f);
+	MenuGameMode.SetColorFon(1.0f, 1.0f, 1.0f);
+	MenuGameMode.SetText("Select game mode", MatrixWidth / 2, MatrixHeght / 2 + 140);
+
+	Button But1, But2, But3;
+
+	//game mode
+	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, []() { SelectGameMode = Simpl; }, "Simple");
+	But1.SetBack(0, 1, 0);
+	But1.SetFront(1, 1, 1);
+
+	But2.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { SelectGameMode = Hard; }, "Hard");
+	But2.SetBack(0, 1, 0);
+	But2.SetFront(1, 1, 1);
+
+	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { GameStatus = StartMenu; }, "Backward");
+	But3.SetBack(0, 1, 0);
+	But3.SetFront(1, 1, 1);
+
+	MenuGameMode.AddButton(But1);
+	MenuGameMode.AddButton(But2);
+	MenuGameMode.AddButton(But3);
+}
+
+void AddMenuEndGame()
+{
+	MenuEndGame.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
+	MenuEndGame.SetColorCircuit(0.0f, 1.0f, 0.0f);
+	MenuEndGame.SetColorFon(1.0f, 1.0f, 1.0f);
+	MenuEndGame.SetText("End Game", MatrixWidth / 2, MatrixHeght / 2 + 140);
+
+	Button But1, But2;
+
+	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, ButtonStartMenu, "Start menu");
+	But1.SetBack(0, 1, 0);
+	But1.SetFront(1, 1, 1);
+
+	But2.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { exit(0); }, "Exit");
+	But2.SetBack(0, 1, 0);
+	But2.SetFront(1, 1, 1);
+
+	MenuEndGame.AddButton(But1);
+	MenuEndGame.AddButton(But2);
+}
+
 void InichialParams()
 {
 	Circl red(Point(20, MatrixHeght / 2 + 50), 20, 10), gren(Point(20, MatrixHeght / 2), 20, 50), blue(Point(20, MatrixHeght /2 - 50), 20, 90);
@@ -142,98 +252,30 @@ void InichialParams()
 	Blue = blue;
 
 	GameStatus = StartMenu;
+
 	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
 	Wolf.SetImage(pImage);
 	Wolf.SetImageTransform(pImageTransform);
 
-	MainMenu.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
-	MainMenu.SetColorCircuit(0.0f, 1.0f, 0.0f);
-	MainMenu.SetColorFon(1.0f, 1.0f, 1.0f);
-	MainMenu.SetText("Menu", MatrixWidth / 2, MatrixHeght / 2 + 140);
-
-	PauseMenu.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
-	PauseMenu.SetColorCircuit(0.0f, 1.0f, 0.0f);
-	PauseMenu.SetColorFon(1.0f, 1.0f, 1.0f);
-	PauseMenu.SetText("Pause", MatrixWidth / 2, MatrixHeght / 2 + 140);
-
-	MenuGameMode.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
-	MenuGameMode.SetColorCircuit(0.0f, 1.0f, 0.0f);
-	MenuGameMode.SetColorFon(1.0f, 1.0f, 1.0f);
-	MenuGameMode.SetText("Select game mode", MatrixWidth / 2, MatrixHeght / 2 + 140);
-
-	MenuEndGame.SetFon(Point(MatrixWidth / 2, MatrixHeght / 2), 80, 150, 2);
-	MenuEndGame.SetColorCircuit(0.0f, 1.0f, 0.0f);
-	MenuEndGame.SetColorFon(1.0f, 1.0f, 1.0f);
-	MenuEndGame.SetText("End Game", MatrixWidth / 2, MatrixHeght / 2 + 140);
-
-	Button But1, But2, But3, But4, But5, But6, But7, But8, But9, But10;
-	//main
-	But1.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, []() { GameStatus = Game; }, "Start a game!");
-	But1.SetBack(0, 1, 0);
-	But1.SetFront(1, 1, 1);
-
-	But8.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { GameStatus = GameMode; }, "Game Mode");
-	But8.SetBack(0, 1, 0);
-	But8.SetFront(1, 1, 1);
-
-	But4.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, []() { isDebuge = !isDebuge; }, "Debage!!");
-	But4.SetBack(1, 0, 0);
-	But4.SetFront(1, 1, 1);
-
-	But3.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { exit(0); }, "Exit");
-	But3.SetBack(0, 1, 0);
-	But3.SetFront(1, 1, 1);
-	//pause
-	But9.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, Button9StartMenu, "Start menu");
-	But9.SetBack(0, 1, 0);
-	But9.SetFront(1, 1, 1);
-
-	But2.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { GameStatus = Game; }, "Continue");
-	But2.SetBack(0, 1, 0);
-	But2.SetFront(1, 1, 1);
-
-	But10.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 10), 60, 20, 2, []() { isDebuge = !isDebuge; }, "Debage!!");
-	But10.SetBack(1, 0, 0);
-	But10.SetFront(1, 1, 1);
-	//game mode
-	But5.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 110), 60, 20, 2, []() { SelectGameMode = Simpl; }, "Simple");
-	But5.SetBack(0, 1, 0);
-	But5.SetFront(1, 1, 1);
-
-	But6.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 + 60), 60, 20, 2, []() { SelectGameMode = Hard; }, "Hard");
-	But6.SetBack(0, 1, 0);
-	But6.SetFront(1, 1, 1);
-
-	But7.SetObject(Point(MatrixWidth / 2, MatrixHeght / 2 - 110), 60, 20, 2, []() { GameStatus = StartMenu; }, "Backward");
-	But7.SetBack(0, 1, 0);
-	But7.SetFront(1, 1, 1);
-
-	MainMenu.AddButton(But1);
-	MainMenu.AddButton(But8);
-	MainMenu.AddButton(But4);
-	MainMenu.AddButton(But3);
-
-	PauseMenu.AddButton(But9);
-	PauseMenu.AddButton(But2);
-	PauseMenu.AddButton(But10);
-	PauseMenu.AddButton(But3);
-
-	MenuGameMode.AddButton(But5);
-	MenuGameMode.AddButton(But6);
-	MenuGameMode.AddButton(But7);
-
-	MenuEndGame.AddButton(But9);
-	MenuEndGame.AddButton(But3);
-
+	AddMainMenu();
+	AddPauseMenu();
+	AddMenuGameMode();
+	AddMenuEndGame();
 }
 
-void Button9StartMenu()
+void ButtonStartMenu()
 {
 	GameStatus = StartMenu; 
 	Counts = 0;
 	Time = 0;
-	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20), Point(MatrixWidth / 2 + Radius, 20 + 30)));
+	Wolf.SetObject(Rectangl(Point(MatrixWidth / 2 - Radius, 20 + 60), Point(MatrixWidth / 2 + Radius, 20 + 30 + 60)));
 	Circls.erase(Circls.begin(), Circls.end());
+}
+
+void ButtonDebage()
+{
+	isDebuge = !isDebuge;
+	Wolf.SetDebage() = !Wolf.SetDebage();
 }
 
 void TextXY(const char* text, int x, int y)
@@ -411,6 +453,9 @@ void RenderScene()
 
 void TimerFunction(int value)
 {
+	if (Counts < 0)
+		GameStatus = EndGame;
+
 	glutPostRedisplay();
 	glutTimerFunc(value, TimerFunction, value);
 }
@@ -436,7 +481,7 @@ void TimerMoveCircl(int value)
 		{
 			Circls[i].Centr.y -= 1;
 
-			if (Circls[i].Centr.y - Circls[i].radius <= Wolf.GetRightPoint().y && Circls[i].Centr.x + Circls[i].radius >= Wolf.GetLeftPoint().x && Circls[i].Centr.x - Circls[i].radius <= Wolf.GetRightPoint().x && Circls[i].Centr.y + Circls[i].radius >= Wolf.GetLeftPoint().y)
+			if (Circls[i].Centr.y - Circls[i].radius <= Wolf.GetRightPoint().y && Circls[i].Centr.x + Circls[i].radius >= Wolf.GetLeftPoint().x && Circls[i].Centr.x - Circls[i].radius <= Wolf.GetRightPoint().x)
 			{
 				Counts += Circls[i].Prise;
 				Circls.erase(Circls.begin() + i, Circls.begin() + i + 1);
@@ -462,71 +507,73 @@ void TimerCreateCircls(int value)
 	{
 		int count = rand() % 3 + 1;
 		int radius = 20;
+		int shift = 25;
 
 		for (int i = 0; i < count; i++)
 		{
 			int x = rand() % (int)(MatrixWidth / 2 - 2 * radius) + MatrixWidth / 4 + radius,
 				y = MatrixHeght - 13 - radius;
-			Circls.push_back(Circl(Point(x , y), radius, rand() % 100));
+			Circls.push_back(Circl(Point(x, y), radius, rand() % 100));
 		}
 
 		if (count != 1)
 		{
-			for (int i = Circls.size() - count; i < Circls.size() - 1; i++)
-			{
-				for (int j = i + 1; j < Circls.size(); j++)
+			for (int counter = 0; counter < count; counter++)
+				for (int i = Circls.size() - count; i < Circls.size() - 1; i++)
 				{
-					double L = abs(Circls[j].Centr.x - Circls[i].Centr.x);
-					double R = Circls[j].radius + Circls[i].radius;
-
-					if (L >= R)
-						continue;
-
-					Circls[j].isIntr = true;
-					Circls[i].isIntr = true;
-
-					double move1 = (R - L) / 2 + 1, move2 = (R - L) / 2 + 1;
-
-					if (Circls[i].Centr.x < Circls[j].Centr.x)
+					for (int j = i + 1; j < Circls.size(); j++)
 					{
-						int razn1 = Circls[i].Centr.x - Circls[i].radius - MatrixWidth / 4;
-						int razn2 = 3 * MatrixWidth / 4 - Circls[j].Centr.x - Circls[j].radius;
+						double L = abs(Circls[j].Centr.x - Circls[i].Centr.x);
+						double R = Circls[j].radius + Circls[i].radius;
 
-						if (razn1 < move1)
-						{
-							move2 += move1 - razn1;
-							move1 = razn1;
-						}
-						else if (razn2 < move2)
-						{
-							move1 += move2 - razn2;
-							move2 = razn2;
-						}
+						if (L >= R)
+							continue;
 
-						Circls[i].Centr.x -= move1;
-						Circls[j].Centr.x += move2;
-					}
-					else
-					{
-						int razn1 = Circls[j].Centr.x - Circls[j].radius - MatrixWidth / 4;
-						int razn2 = 3 * MatrixWidth / 4 - Circls[i].Centr.x - Circls[i].radius;
+						Circls[j].isIntr = true;
+						Circls[i].isIntr = true;
 
-						if (razn1 < move1)
-						{
-							move2 += move1 - razn1;
-							move1 = razn1;
-						}
-						else if (razn2 < move2)
-						{
-							move1 += move2 - razn2;
-							move2 = razn2;
-						}
+						double move1 = (R - L) / 2 + 1, move2 = (R - L) / 2 + 1;
 
-						Circls[i].Centr.x += move1;
-						Circls[j].Centr.x -= move2;
+						if (Circls[i].Centr.x < Circls[j].Centr.x)
+						{
+							int razn1 = Circls[i].Centr.x - Circls[i].radius - MatrixWidth / 4;
+							int razn2 = 3 * MatrixWidth / 4 - Circls[j].Centr.x - Circls[j].radius;
+
+							if (razn1 < move1)
+							{
+								move2 += move1 - razn1;
+								move1 = razn1;
+							}
+							else if (razn2 < move2)
+							{
+								move1 += move2 - razn2;
+								move2 = razn2;
+							}
+
+							Circls[i].Centr.x -= move1;
+							Circls[j].Centr.x += move2;
+						}
+						else
+						{
+							int razn1 = Circls[j].Centr.x - Circls[j].radius - MatrixWidth / 4;
+							int razn2 = 3 * MatrixWidth / 4 - Circls[i].Centr.x - Circls[i].radius;
+
+							if (razn1 < move1)
+							{
+								move2 += move1 - razn1;
+								move1 = razn1;
+							}
+							else if (razn2 < move2)
+							{
+								move1 += move2 - razn2;
+								move2 = razn2;
+							}
+
+							Circls[i].Centr.x += move1;
+							Circls[j].Centr.x -= move2;
+						}
 					}
 				}
-			}
 		}
 	}
 
